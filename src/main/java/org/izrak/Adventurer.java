@@ -1,6 +1,6 @@
 package org.izrak;
 
-import org.izrak.Exception.InvalidAdventurerNameException;
+import org.izrak.exception.InvalidAdventurerNameException;
 
 public class Adventurer {
 
@@ -9,7 +9,7 @@ public class Adventurer {
     private final Orientation orientation;
 
     public Adventurer(String name, Position position, Orientation orientation) throws InvalidAdventurerNameException {
-        if (name == null) {
+        if (name == null || name.isEmpty()) {
             throw new InvalidAdventurerNameException("Le nom d'un aventurier ne peut pas être nul");
         }
         this.name = name;

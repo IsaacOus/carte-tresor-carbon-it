@@ -1,6 +1,6 @@
 package org.izrak;
 
-import org.izrak.Exception.InvalidAdventurerNameException;
+import org.izrak.exception.InvalidAdventurerNameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
