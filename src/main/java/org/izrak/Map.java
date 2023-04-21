@@ -10,7 +10,7 @@ public class Map {
         }
 
         public boolean isPositionInsideMap(Position position) {
-            return position.getX() <= width && position.getY() <= height;
+            return position.getX() >= 0 && position.getX() < width && position.getY() >= 0 && position.getY() < height;
         }
 
         public int getWidth() {

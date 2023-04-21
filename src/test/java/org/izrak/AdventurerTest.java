@@ -17,7 +17,7 @@ class AdventurerTest {
         Orientation orientation = Orientation.NORTH;
         Map map = new Map(10, 10);
         // When
-        Adventurer adventurer = new Adventurer("Lara",position, orientation, map);
+        Adventurer adventurer = new Adventurer("Lara", position, orientation, map);
 
         // Then
         Assertions.assertEquals("Lara", adventurer.getName());
@@ -33,7 +33,7 @@ class AdventurerTest {
         Map map = new Map(10, 10);
 
         // When
-        Adventurer adventurer = new Adventurer("Lara",position, orientation, map);
+        Adventurer adventurer = new Adventurer("Lara", position, orientation, map);
 
         // Then
         Assertions.assertEquals("Lara", adventurer.getName());
@@ -55,9 +55,9 @@ class AdventurerTest {
                 () -> new Adventurer(no_name, position, orientation, map), "Le nom d'un aventurier ne peut pas être nul");
     }
 
-@DisplayName("Should throws exception when starting position is outside the map")
+    @DisplayName("Should throws exception when starting position is outside the map")
     @Test
-    void should_throw_invalidAdventurerNameException_when_starting_position_is_outside_the_map() {
+    void should_throw_invalidAdventurerStartingPositionException_when_starting_position_is_outside_the_map() {
         // Given
         Position position = new Position(11, 11);
         Orientation orientation = Orientation.SOUTH;
@@ -68,4 +68,20 @@ class AdventurerTest {
         Assertions.assertThrows(InvalidAdventurerStartingPositionException.class,
                 () -> new Adventurer("Lara", position, orientation, map), "La position de départ d'un aventurier doit être dans la carte");
     }
+
+    @DisplayName("Should throws exception when starting position (negative) is outside the map")
+    @Test
+    void should_throw_invalidAdventurerStartingPositionException_when_starting_negative_position_is_outside_the_map() {
+        // Given
+        Position position = new Position(5, 5);
+        Orientation orientation = Orientation.SOUTH;
+        Map map = new Map(-1, -1);
+
+        // When
+        // Then
+        Assertions.assertThrows(InvalidAdventurerStartingPositionException.class,
+                () -> new Adventurer("Lara", position, orientation, map), "La position de départ d'un aventurier doit être dans la carte");
+    }
+
+
 }
