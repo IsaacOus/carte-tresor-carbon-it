@@ -1,7 +1,8 @@
 package org.izrak;
 
-import org.izrak.exception.InvalidAdventurerNameException;
-import org.izrak.exception.InvalidAdventurerStartingPositionException;
+import org.izrak.exception.adventurer.AdventurerException;
+import org.izrak.exception.adventurer.InvalidAdventurerNameException;
+import org.izrak.exception.adventurer.InvalidAdventurerStartingPositionException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
@@ -10,7 +11,7 @@ class AdventurerTest {
 
     @DisplayName("Should initialize adventurer with a valid position, north orientation and name")
     @Test
-    void should_initialize_adventurer_with_a_valid_position_north_orientation_and_name() throws InvalidAdventurerNameException, InvalidAdventurerStartingPositionException {
+    void should_initialize_adventurer_with_a_valid_position_north_orientation_and_name() throws AdventurerException {
         // Given
         Position position = new Position(1, 1);
         Orientation orientation = Orientation.NORTH;
@@ -25,7 +26,7 @@ class AdventurerTest {
 
     @DisplayName("Should initialize adventurer with a valid position, east orientation and name")
     @Test
-    void should_initialize_adventurer_with_a_valid_position_east_orientation_and_name() throws InvalidAdventurerNameException, InvalidAdventurerStartingPositionException {
+    void should_initialize_adventurer_with_a_valid_position_east_orientation_and_name() throws AdventurerException {
         // Given
         Position position = new Position(1, 1);
         Orientation orientation = Orientation.EAST;

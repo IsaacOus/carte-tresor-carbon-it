@@ -1,7 +1,8 @@
 package org.izrak;
 
-import org.izrak.exception.InvalidAdventurerNameException;
-import org.izrak.exception.InvalidAdventurerStartingPositionException;
+import org.izrak.exception.adventurer.AdventurerException;
+import org.izrak.exception.adventurer.InvalidAdventurerNameException;
+import org.izrak.exception.adventurer.InvalidAdventurerStartingPositionException;
 
 public class Adventurer {
 
@@ -9,7 +10,7 @@ public class Adventurer {
     private final Position position;
     private final Orientation orientation;
 
-    public Adventurer(String name, Position position, Orientation orientation, Map map) throws InvalidAdventurerNameException, InvalidAdventurerStartingPositionException {
+    public Adventurer(String name, Position position, Orientation orientation, Map map) throws AdventurerException {
         if (name == null || name.isEmpty()) {
             throw new InvalidAdventurerNameException("Le nom d'un aventurier ne peut pas être nul");
         }
