@@ -156,4 +156,20 @@ class AdventurerTest {
 
         Assertions.assertTrue(thrownError.getMessage().contentEquals("Commande incorrecte"));
     }
+
+    @DisplayName("Should move forward when given a forward command")
+    @Test
+    void should_move_forward_when_given_a_forward_command() throws AdventurerException, CommandException {
+        //Given
+        Position position = new Position(0, 0);
+        Orientation orientation = Orientation.N;
+        Map map = new Map(10, 10);
+
+        //When
+        Adventurer adventurer = new Adventurer("Bob", position, orientation, map);
+        String result = adventurer.executeCommands("A");
+
+        //Then
+        Assertions.assertEquals("0 - 1 - N", result);
+    }
 }

@@ -12,6 +12,7 @@ public class Adventurer implements Command {
     private final String name;
     private final Position position;
     private Orientation orientation;
+    private final Map map;
 
     public Adventurer(String name, Position position, Orientation orientation, Map map) throws AdventurerException {
         if (name == null || name.isEmpty()) {
@@ -23,6 +24,7 @@ public class Adventurer implements Command {
         if (!map.isPositionInsideMap(position)) {
             throw new InvalidAdventurerStartingPositionException("La position de départ d'un aventurier doit être dans la carte");
         }
+        this.map = map;
     }
 
     public String getName() {
@@ -47,6 +49,7 @@ public class Adventurer implements Command {
     private void executeCommand(char command) throws CommandException {
         switch (command) {
             case 'A':
+                moveForward();
                 break;
             case 'D':
                 this.orientation = orientation.turnRight();
@@ -59,4 +62,16 @@ public class Adventurer implements Command {
         }
     }
 
+    private void moveForward() {
+        if (!isAdventurerAtEdgeOfMap()) {
+            this.position.setY(this.position.getY() + 1);
+        }
+    }
+
+    private boolean isAdventurerAtEdgeOfMap() {
+        return (this.position.getX() == 0 && orientation == Orientation.W) ||
+                (this.position.getX() == map.getWidth() && orientation == Orientation.E) ||
+                (this.position.getY() == 0 && orientation == Orientation.S) ||
+                (this.position.getY() == map.getHeight() && orientation == Orientation.N);
+    }
 }
