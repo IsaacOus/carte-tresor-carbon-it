@@ -9,6 +9,8 @@ import org.izrak.orientation.Orientation;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class AdventurerTest {
 
@@ -54,9 +56,7 @@ class AdventurerTest {
         Map map = new Map(10, 10);
 
         // When
-        Assertions.assertThrows(InvalidAdventurerNameException.class,
-                () -> new Adventurer(no_name, position, orientation, map),
-                "Le nom d'un aventurier ne peut pas être nul");
+        Assertions.assertThrows(InvalidAdventurerNameException.class, () -> new Adventurer(no_name, position, orientation, map), "Le nom d'un aventurier ne peut pas être nul");
     }
 
     @DisplayName("Should throws exception when starting position is outside the map")
@@ -69,9 +69,7 @@ class AdventurerTest {
 
         // When
         // Then
-        Assertions.assertThrows(InvalidAdventurerStartingPositionException.class,
-                () -> new Adventurer("Lara", position, orientation, map),
-                "La position de départ d'un aventurier doit être dans la carte");
+        Assertions.assertThrows(InvalidAdventurerStartingPositionException.class, () -> new Adventurer("Lara", position, orientation, map), "La position de départ d'un aventurier doit être dans la carte");
     }
 
     @DisplayName("Should throws exception when starting position (negative) is outside the map")
@@ -84,14 +82,12 @@ class AdventurerTest {
 
         // When
         // Then
-        Assertions.assertThrows(InvalidAdventurerStartingPositionException.class,
-                () -> new Adventurer("Lara", position, orientation, map),
-                "La position de départ d'un aventurier doit être dans la carte");
+        Assertions.assertThrows(InvalidAdventurerStartingPositionException.class, () -> new Adventurer("Lara", position, orientation, map), "La position de départ d'un aventurier doit être dans la carte");
     }
 
     @DisplayName("Should be at the same position when given an empty command list")
     @Test
-    void should_be_at_same_position_given_an_empty_command_list() throws AdventurerException, CommandException{
+    void should_be_at_same_position_given_an_empty_command_list() throws AdventurerException, CommandException {
         //Given
         Position position = new Position(0, 0);
         Orientation orientation = Orientation.N;
@@ -105,9 +101,12 @@ class AdventurerTest {
         Assertions.assertEquals("0 - 0 - N", result);
     }
 
-    @DisplayName("Should be at the same position and facing east when given 'D' command")
-    @Test
-    void should_be_at_same_position_and_facing_east_given_D_command() throws AdventurerException, CommandException{
+    @ParameterizedTest
+    @CsvSource({"D, 0 - 0 - E",
+                "DD, 0 - 0 - S",
+                "DDD, 0 - 0 - W",
+                "DDDD, 0 - 0 - N",})
+    void should_be_at_same_position_and_correct_orientation_when_turn_right(String command, String newPosition) throws AdventurerException, CommandException {
         //Given
         Position position = new Position(0, 0);
         Orientation orientation = Orientation.N;
@@ -115,15 +114,18 @@ class AdventurerTest {
 
         //When
         Adventurer adventurer = new Adventurer("Bob", position, orientation, map);
-        String result = adventurer.executeCommands("D");
+        String result = adventurer.executeCommands(command);
 
         //Then
-        Assertions.assertEquals("0 - 0 - E", result);
+        Assertions.assertEquals(newPosition, result);
     }
 
-    @DisplayName("Should be at the same position and facing west when given 'G' command")
-    @Test
-    void should_be_at_same_position_and_facing_west_given_G_command() throws AdventurerException, CommandException {
+    @ParameterizedTest
+    @CsvSource({"G, 0 - 0 - W",
+                "GG, 0 - 0 - S",
+                "GGG, 0 - 0 - E",
+                "GGGG, 0 - 0 - N",})
+    void should_be_at_same_position_and_facing_correct_orientation_when_given_turn_left_command(String command, String newPosition) throws AdventurerException, CommandException {
         //Given
         Position position = new Position(0, 0);
         Orientation orientation = Orientation.N;
@@ -131,10 +133,10 @@ class AdventurerTest {
 
         //When
         Adventurer adventurer = new Adventurer("Bob", position, orientation, map);
-        String result = adventurer.executeCommands("G");
+        String result = adventurer.executeCommands(command);
 
         //Then
-        Assertions.assertEquals("0 - 0 - W", result);
+        Assertions.assertEquals(newPosition, result);
     }
 
 
@@ -150,9 +152,7 @@ class AdventurerTest {
         Adventurer adventurer = new Adventurer("Bob", position, orientation, map);
 
         //Then
-        InvalidCommandException thrownError = Assertions.assertThrows(InvalidCommandException.class,
-                () -> adventurer.executeCommands("Z"),
-                "Commande incorrecte");
+        InvalidCommandException thrownError = Assertions.assertThrows(InvalidCommandException.class, () -> adventurer.executeCommands("Z"), "Commande incorrecte");
 
         Assertions.assertTrue(thrownError.getMessage().contentEquals("Commande incorrecte"));
     }
