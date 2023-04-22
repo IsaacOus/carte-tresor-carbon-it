@@ -158,7 +158,11 @@ class AdventurerTest {
     }
 
     @DisplayName("Should move forward when given a forward command")
-    @Test
+    @ParameterizedTest
+    @CsvSource({"N, 0 - 1 - N",
+                "S, 0 - -1 - S",
+                "E, 1 - 0 - E",
+                "W, -1 - 0 - W",})
     void should_move_forward_when_given_a_forward_command() throws AdventurerException, CommandException {
         //Given
         Position position = new Position(0, 0);
@@ -171,5 +175,69 @@ class AdventurerTest {
 
         //Then
         Assertions.assertEquals("0 - 1 - N", result);
+    }
+
+    @DisplayName("Should not move when give a forward command when the adventurer is at the edge of the map and facing north")
+    @Test
+    void should_not_move_when_give_a_forward_command_and_the_adventurer_is_at_the_edge_of_the_map_facing_north() throws AdventurerException, CommandException {
+        //Given
+        Position position = new Position(0, 3);
+        Orientation orientation = Orientation.N;
+        Map map = new Map(3, 4);
+
+        //When
+        Adventurer adventurer = new Adventurer("Bob", position, orientation, map);
+        String result = adventurer.executeCommands("A");
+
+        //Then
+        Assertions.assertEquals("0 - 3 - N", result);
+    }
+
+    @DisplayName("Should not move when give a forward command and the adventurer is at the edge of the map and facing east")
+    @Test
+    void should_not_move_when_give_a_forward_command_and_the_adventurer_is_at_the_edge_of_the_map_facing_east() throws AdventurerException, CommandException {
+        //Given
+        Position position = new Position(2, 2);
+        Orientation orientation = Orientation.E;
+        Map map = new Map(3, 4);
+
+        //When
+        Adventurer adventurer = new Adventurer("Bob", position, orientation, map);
+        String result = adventurer.executeCommands("A");
+
+        //Then
+        Assertions.assertEquals("2 - 2 - E", result);
+    }
+
+    @DisplayName("Should not move when give a forward command when the adventurer is at the edge of the map and facing south")
+    @Test
+    void should_not_move_when_give_a_forward_command_and_the_adventurer_is_at_the_edge_of_the_map_facing_south() throws AdventurerException, CommandException {
+        //Given
+        Position position = new Position(0, 0);
+        Orientation orientation = Orientation.S;
+        Map map = new Map(3, 4);
+
+        //When
+        Adventurer adventurer = new Adventurer("Bob", position, orientation, map);
+        String result = adventurer.executeCommands("A");
+
+        //Then
+        Assertions.assertEquals("0 - 0 - S", result);
+    }
+
+    @DisplayName("Should not move when give a forward command when the adventurer is at the edge of the map and facing west")
+    @Test
+    void should_not_move_when_give_a_forward_command_and_the_adventurer_is_at_the_edge_of_the_map_facing_west() throws AdventurerException, CommandException {
+        //Given
+        Position position = new Position(0, 0);
+        Orientation orientation = Orientation.W;
+        Map map = new Map(3, 4);
+
+        //When
+        Adventurer adventurer = new Adventurer("Bob", position, orientation, map);
+        String result = adventurer.executeCommands("A");
+
+        //Then
+        Assertions.assertEquals("0 - 0 - W", result);
     }
 }

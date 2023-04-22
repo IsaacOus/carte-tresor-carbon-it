@@ -64,14 +64,27 @@ public class Adventurer implements Command {
 
     private void moveForward() {
         if (!isAdventurerAtEdgeOfMap()) {
-            this.position.setY(this.position.getY() + 1);
+            switch (this.orientation) {
+                case N:
+                    position.setY(position.getY() + 1);
+                    break;
+                case S:
+                    position.setY(position.getY() - 1);
+                    break;
+                case E:
+                    position.setX(position.getX() + 1);
+                    break;
+                case W:
+                    position.setX(position.getX() - 1);
+                    break;
+            }
         }
     }
 
     private boolean isAdventurerAtEdgeOfMap() {
         return (this.position.getX() == 0 && orientation == Orientation.W) ||
-                (this.position.getX() == map.getWidth() && orientation == Orientation.E) ||
+                (this.position.getX() == map.getWidth() - 1 && orientation == Orientation.E) ||
                 (this.position.getY() == 0 && orientation == Orientation.S) ||
-                (this.position.getY() == map.getHeight() && orientation == Orientation.N);
+                (this.position.getY() == map.getHeight() - 1 && orientation == Orientation.N);
     }
 }
