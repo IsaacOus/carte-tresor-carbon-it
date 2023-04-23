@@ -5,6 +5,8 @@ import org.izrak.exception.adventurer.InvalidAdventurerNameException;
 import org.izrak.exception.adventurer.InvalidAdventurerStartingPositionException;
 import org.izrak.exception.command.CommandException;
 import org.izrak.exception.command.InvalidCommandException;
+import org.izrak.map.Map;
+import org.izrak.map.Position;
 import org.izrak.orientation.Orientation;
 
 public class Adventurer implements Command {
@@ -27,17 +29,6 @@ public class Adventurer implements Command {
         this.map = map;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public Orientation getOrientation() {
-        return orientation;
-    }
 
     public String executeCommands(String commands) throws CommandException {
         for (char command : commands.toCharArray()) {
@@ -87,5 +78,17 @@ public class Adventurer implements Command {
                 (this.position.getX() == map.getWidth() - 1 && orientation == Orientation.E) ||
                 (this.position.getY() == 0 && orientation == Orientation.S) ||
                 (this.position.getY() == map.getHeight() - 1 && orientation == Orientation.N);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public Orientation getOrientation() {
+        return orientation;
     }
 }

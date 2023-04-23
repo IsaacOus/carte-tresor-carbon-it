@@ -5,6 +5,9 @@ import org.izrak.exception.adventurer.InvalidAdventurerNameException;
 import org.izrak.exception.adventurer.InvalidAdventurerStartingPositionException;
 import org.izrak.exception.command.CommandException;
 import org.izrak.exception.command.InvalidCommandException;
+import org.izrak.map.Map;
+import org.izrak.map.Mountain;
+import org.izrak.map.Position;
 import org.izrak.orientation.Orientation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -131,9 +134,9 @@ class AdventurerTest {
         Assertions.assertEquals("0 - 1 - N", result);
     }
 
-    @DisplayName("Should not move when give a forward command when the adventurer is at the edge of the map and facing north")
+    @DisplayName("Should not move when given a forward command when the adventurer is at the edge of the map and facing north")
     @Test
-    void should_not_move_when_give_a_forward_command_and_the_adventurer_is_at_the_edge_of_the_map_facing_north() throws AdventurerException, CommandException {
+    void should_not_move_when_given_a_forward_command_and_the_adventurer_is_at_the_edge_of_the_map_facing_north() throws AdventurerException, CommandException {
         //Given
         Position positionAtEdge = new Position(0, 9);
 
@@ -145,9 +148,9 @@ class AdventurerTest {
         Assertions.assertEquals("0 - 9 - N", result);
     }
 
-    @DisplayName("Should not move when give a forward command and the adventurer is at the edge of the map and facing east")
+    @DisplayName("Should not move when given a forward command and the adventurer is at the edge of the map and facing east")
     @Test
-    void should_not_move_when_give_a_forward_command_and_the_adventurer_is_at_the_edge_of_the_map_facing_east() throws AdventurerException, CommandException {
+    void should_not_move_when_given_a_forward_command_and_the_adventurer_is_at_the_edge_of_the_map_facing_east() throws AdventurerException, CommandException {
         //Given
         Position positionAtEdge = new Position(9, 0);
 
@@ -159,9 +162,9 @@ class AdventurerTest {
         Assertions.assertEquals("9 - 0 - E", result);
     }
 
-    @DisplayName("Should not move when give a forward command when the adventurer is at the edge of the map and facing south")
+    @DisplayName("Should not move when given a forward command when the adventurer is at the edge of the map and facing south")
     @Test
-    void should_not_move_when_give_a_forward_command_and_the_adventurer_is_at_the_edge_of_the_map_facing_south() throws AdventurerException, CommandException {
+    void should_not_move_when_given_a_forward_command_and_the_adventurer_is_at_the_edge_of_the_map_facing_south() throws AdventurerException, CommandException {
         //When
         Adventurer adventurer = new Adventurer("Bob", position, Orientation.S, map);
         String result = adventurer.executeCommands("A");
@@ -170,7 +173,7 @@ class AdventurerTest {
         Assertions.assertEquals("0 - 0 - S", result);
     }
 
-    @DisplayName("Should not move when give a forward command when the adventurer is at the edge of the map and facing west")
+    @DisplayName("Should not move when given a forward command when the adventurer is at the edge of the map and facing west")
     @Test
     void should_not_move_when_give_a_forward_command_and_the_adventurer_is_at_the_edge_of_the_map_facing_west() throws AdventurerException, CommandException {
         //When
@@ -180,4 +183,22 @@ class AdventurerTest {
         //Then
         Assertions.assertEquals("0 - 0 - W", result);
     }
+
+    @DisplayName("Should not move when given a forward command and the adventurer is facing a mountain")
+    @Test
+    void should_not_move_when_given_a_forward_command_and_the_adventurer_is_facing_a_mountain() throws AdventurerException, CommandException {
+
+        //Given
+        Position adventurerStartingPosition = new Position(0, 0);
+        Map map = new Map(10, 10);
+        map.addMountain(new Mountain(new Position(0, 1)));
+
+        //When
+        this.adventurer = new Adventurer("Bob", adventurerStartingPosition, Orientation.N, map);
+        String result = adventurer.executeCommands("A");
+
+        //Then
+        Assertions.assertEquals("0 - 0 - N", result);
+    }
+
 }
