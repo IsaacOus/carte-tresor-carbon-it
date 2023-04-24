@@ -38,13 +38,13 @@ public class Map {
         int y = position.getY();
 
         if (orientation == NORTH) {
-            y++;
-        } else if (orientation == SOUTH) {
             y--;
+        } else if (orientation == SOUTH) {
+            y++;
         } else if (orientation == EAST) {
-            x++;
-        } else if (orientation == WEST) {
             x--;
+        } else if (orientation == WEST) {
+            x++;
         }
 
         Position newPosition = new Position(x, y);

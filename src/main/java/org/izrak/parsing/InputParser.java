@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class InputParser {
-    private String[] map;
+    private final String[] map;
 
-    private ArrayList<String[]> adventurers;
-    private ArrayList<String[]> treasures;
-    private ArrayList<String[]> mountains;
+    private final ArrayList<String[]> adventurers;
+    private final  ArrayList<String[]> treasures;
+    private final ArrayList<String[]> mountains;
 
 
     public InputParser(String filename) {
@@ -49,10 +49,6 @@ public class InputParser {
     }
 
     public String[] getMapSize() {
-        return map;
-    }
-
-    public String[] getMap() {
         return map;
     }
 

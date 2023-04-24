@@ -3,25 +3,25 @@ package org.izrak.orientation;
 import java.util.Arrays;
 
 public enum Orientation {
-    NORTH("N", "W", "E") {
+    NORTH("N", "E", "W") {
         @Override
         public String toString() {
             return "N";
         }
     },
-    EAST("E", "N", "S") {
+    EAST("E", "S", "N") {
         @Override
         public String toString() {
             return "E";
         }
     },
-    SOUTH("S", "E", "W") {
+    SOUTH("S", "W", "E") {
         @Override
         public String toString() {
             return "S";
         }
     },
-    WEST("W", "S", "N") {
+    WEST("W", "N", "S") {
         @Override
         public String toString() {
             return "W";
