@@ -40,7 +40,7 @@ class MapTest {
         this.position = new Position(3, 4);
 
         // When
-        Position nextPosition = map.getNextPosition(position, Orientation.NORTH);
+        Position nextPosition = map.getNextPosition(position, Orientation.SOUTH);
 
         // Then
         assertNotEquals(position, nextPosition);
