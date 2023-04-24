@@ -6,15 +6,13 @@ import org.izrak.exception.adventurer.InvalidAdventurerStartingPositionException
 import org.izrak.exception.command.CommandException;
 import org.izrak.exception.command.InvalidCommandException;
 import org.izrak.map.Map;
-import org.izrak.map.Mountain;
 import org.izrak.map.Position;
 import org.izrak.orientation.Orientation;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import java.util.Set;
 
 class AdventurerTest {
 
@@ -27,7 +25,7 @@ class AdventurerTest {
     @BeforeEach
     void setUp() throws AdventurerException {
         this.position = new Position(0, 0);
-        this.orientation = Orientation.N;
+        this.orientation = Orientation.NORTH;
         this.map = new Map(10, 10);
         this.adventurer = new Adventurer("Lara", position, orientation, map);
     }
@@ -155,7 +153,7 @@ class AdventurerTest {
         Position positionAtEdge = new Position(9, 0);
 
         //When
-        Adventurer adventurer = new Adventurer("Bob", positionAtEdge, Orientation.E, map);
+        Adventurer adventurer = new Adventurer("Bob", positionAtEdge, Orientation.EAST, map);
         String result = adventurer.executeCommands("A");
 
         //Then
@@ -166,7 +164,7 @@ class AdventurerTest {
     @Test
     void should_not_move_when_given_a_forward_command_and_the_adventurer_is_at_the_edge_of_the_map_facing_south() throws AdventurerException, CommandException {
         //When
-        Adventurer adventurer = new Adventurer("Bob", position, Orientation.S, map);
+        Adventurer adventurer = new Adventurer("Bob", position, Orientation.SOUTH, map);
         String result = adventurer.executeCommands("A");
 
         //Then
@@ -177,7 +175,7 @@ class AdventurerTest {
     @Test
     void should_not_move_when_give_a_forward_command_and_the_adventurer_is_at_the_edge_of_the_map_facing_west() throws AdventurerException, CommandException {
         //When
-        Adventurer adventurer = new Adventurer("Bob", position, Orientation.W, map);
+        Adventurer adventurer = new Adventurer("Bob", position, Orientation.WEST, map);
         String result = adventurer.executeCommands("A");
 
         //Then
@@ -187,14 +185,12 @@ class AdventurerTest {
     @DisplayName("Should not move when given a forward command and the adventurer is facing a mountain")
     @Test
     void should_not_move_when_given_a_forward_command_and_the_adventurer_is_facing_a_mountain() throws AdventurerException, CommandException {
-
         //Given
-        Position adventurerStartingPosition = new Position(0, 0);
-        Map map = new Map(10, 10);
-        map.addMountain(new Mountain(new Position(0, 1)));
+        Set<Position> mountains = Set.of(new Position(0, 1));
+        Map mapWithMoutains = new Map(10, 10, mountains);
 
         //When
-        this.adventurer = new Adventurer("Bob", adventurerStartingPosition, Orientation.N, map);
+        this.adventurer = new Adventurer("Bob", position, Orientation.NORTH, mapWithMoutains);
         String result = adventurer.executeCommands("A");
 
         //Then
