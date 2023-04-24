@@ -80,4 +80,8 @@ public class Map {
         return treasures;
     }
 
+    public Set<Position> getMountains() {
+        return mountains;
+    }
+
 }

@@ -9,6 +9,8 @@ import org.izrak.map.Map;
 import org.izrak.map.Position;
 import org.izrak.orientation.Orientation;
 
+import java.util.Objects;
+
 public class Adventurer implements Command {
 
     private final String name;
@@ -71,6 +73,24 @@ public class Adventurer implements Command {
                 (this.position.getX() == map.getWidth() - 1 && orientation == Orientation.EAST) ||
                 (this.position.getY() == 0 && orientation == Orientation.SOUTH) ||
                 (this.position.getY() == map.getHeight() - 1 && orientation == Orientation.NORTH);
+    }
+
+    @Override
+    public String toString() {
+        return "A - " + name + " - " + position.getX() + " - " + position.getY() + " - " + orientation + " - " + treasures;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Adventurer that = (Adventurer) o;
+        return treasures == that.treasures && Objects.equals(name, that.name) && Objects.equals(position, that.position) && orientation == that.orientation && Objects.equals(map, that.map);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, position, orientation, map, treasures);
     }
 
     public String getName() {
