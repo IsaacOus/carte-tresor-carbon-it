@@ -262,4 +262,24 @@ class AdventurerTest {
                 () -> Assertions.assertEquals(0, mapWithTreasures.getTreasures().size())
         );
     }
+
+    @DisplayName("Sample test")
+    @Test
+    void sampleTest() throws AdventurerException, CommandException {
+
+        Position intialPosition = new Position(1, 1);
+
+        Set<Position> mountains = Set.of(new Position(1, 0), new Position(2, 1));
+
+        List<Position> treasures = new ArrayList<>(List.of(new Position(0, 3),
+                new Position(0, 3), new Position(1, 3), new Position(1, 3), new Position(1, 3)));
+
+
+        Map map = new Map(3, 4, mountains, treasures);
+
+        Adventurer adventurer = new Adventurer("Lara", intialPosition, Orientation.SOUTH, map);
+
+        Assertions.assertEquals("0 - 3 - S - 3", adventurer.executeCommands("AADADAGGA") + " - " + adventurer.getTreasures());
+
+    }
 }
