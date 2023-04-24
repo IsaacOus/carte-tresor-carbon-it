@@ -14,12 +14,11 @@ class MapTest {
 
     private Map map;
     private Position position;
-    private Set<Position> mountains;
 
     @BeforeEach
     void setUp(){
         position = new Position(0, 0);
-        mountains = Set.of(new Position(0, 1));
+        Set<Position> mountains = Set.of(new Position(0, 1));
         map = new Map(10, 10, mountains);
     }
 
