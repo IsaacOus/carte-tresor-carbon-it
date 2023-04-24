@@ -41,12 +41,12 @@ public class Map {
 
         Position newPosition = new Position(x, y);
 
-        return mountains.contains(newPosition) || !isPositionInsideMap(newPosition) ? position : newPosition;
+        return mountains.contains(newPosition) || isPositionNotInsideMap(newPosition) ? position : newPosition;
 
     }
 
-    public boolean isPositionInsideMap(Position position) {
-        return position.getX() >= 0 && position.getX() < width && position.getY() >= 0 && position.getY() < height;
+    public boolean isPositionNotInsideMap(Position position) {
+        return position.getX() < 0 || position.getX() >= width || position.getY() < 0 || position.getY() >= height;
     }
 
     public int getWidth() {

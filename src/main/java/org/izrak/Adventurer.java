@@ -23,7 +23,7 @@ public class Adventurer implements Command {
         this.name = name;
         this.position = position;
         this.orientation = orientation;
-        if (!map.isPositionInsideMap(position)) {
+        if (map.isPositionNotInsideMap(position)) {
             throw new InvalidAdventurerStartingPositionException("La position de départ d'un aventurier doit être dans la carte");
         }
         this.map = map;

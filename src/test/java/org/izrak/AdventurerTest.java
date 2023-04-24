@@ -123,13 +123,20 @@ class AdventurerTest {
 
     @DisplayName("Should move forward when given a forward command")
     @ParameterizedTest
-    @CsvSource({"N, 0 - 1 - N", "S, 0 - -1 - S", "E, 1 - 0 - E", "W, -1 - 0 - W",})
-    void should_move_forward_when_given_a_forward_command() throws CommandException {
+    @CsvSource({"NORTH, 1 - 2 - N",
+            "SOUTH, 1 - 0 - S",
+            "EAST, 2 - 1 - E",
+            "WEST, 0 - 1 - W"})
+    void should_move_forward_when_given_a_forward_command(String adventurerOrientation, String newPosition) throws CommandException, AdventurerException {
+        //Given
+        Position adventurerPosition = new Position(1, 1);
+        this.adventurer = new Adventurer("Bob", adventurerPosition, Orientation.valueOf(adventurerOrientation), map);
+
         //When
         String result = adventurer.executeCommands("A");
 
         //Then
-        Assertions.assertEquals("0 - 1 - N", result);
+        Assertions.assertEquals(newPosition, result);
     }
 
     @DisplayName("Should not move when given a forward command when the adventurer is at the edge of the map and facing north")
