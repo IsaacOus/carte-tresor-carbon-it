@@ -5,10 +5,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MapTest {
 
@@ -16,7 +17,7 @@ class MapTest {
     private Position position;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         position = new Position(0, 0);
         Set<Position> mountains = Set.of(new Position(0, 1));
         map = new Map(10, 10, mountains);
@@ -36,14 +37,14 @@ class MapTest {
     @Test
     void should_return_the_newPosition_if_there_is_not_a_mountain_on_the_next_position() {
         // Given
-        this.position = new Position(3,4);
+        this.position = new Position(3, 4);
 
         // When
         Position nextPosition = map.getNextPosition(position, Orientation.NORTH);
 
         // Then
         assertNotEquals(position, nextPosition);
-        assertEquals(new Position(3,5), nextPosition);
+        assertEquals(new Position(3, 5), nextPosition);
 
     }
 
@@ -55,6 +56,21 @@ class MapTest {
 
         // Then
         assertEquals(position, nextPosition);
+    }
+
+    @DisplayName("Should return true if there is a treasure on the position")
+    @Test
+    void should_return_true_if_there_is_a_treasure_on_the_position() {
+        // Given
+        this.position = new Position(3, 4);
+        Set<Position> mountains = Set.of(new Position(0, 1));
+        List<Position> treasures = new ArrayList<>(List.of(new Position(3, 4)));
+        map = new Map(10, 10, mountains, treasures);
+
+        // When
+        boolean isTreasure = map.isTreasureAtPosition(position);
+        // Then
+        assertTrue(isTreasure);
     }
 
 }

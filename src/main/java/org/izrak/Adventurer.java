@@ -15,6 +15,7 @@ public class Adventurer implements Command {
     private Position position;
     private Orientation orientation;
     private final Map map;
+    private int treasures;
 
     public Adventurer(String name, Position position, Orientation orientation, Map map) throws AdventurerException {
         if (name == null || name.isEmpty()) {
@@ -27,6 +28,7 @@ public class Adventurer implements Command {
             throw new InvalidAdventurerStartingPositionException("La position de départ d'un aventurier doit être dans la carte");
         }
         this.map = map;
+        this.treasures = 0;
     }
 
 
@@ -58,6 +60,10 @@ public class Adventurer implements Command {
             return;
         }
         this.position = map.getNextPosition(position, orientation);
+
+        if (map.isTreasureAtPosition(position)) {
+            treasures++;
+        }
     }
 
     private boolean isAdventurerAtEdgeOfMap() {
@@ -77,5 +83,9 @@ public class Adventurer implements Command {
 
     public Orientation getOrientation() {
         return orientation;
+    }
+
+    public int getTreasures() {
+        return treasures;
     }
 }

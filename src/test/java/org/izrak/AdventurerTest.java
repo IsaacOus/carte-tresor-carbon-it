@@ -12,7 +12,7 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.util.Set;
+import java.util.*;
 
 class AdventurerTest {
 
@@ -204,4 +204,62 @@ class AdventurerTest {
         Assertions.assertEquals("0 - 0 - N", result);
     }
 
+
+    @DisplayName("Should add treasure to adventurer when stepping on treasure")
+    @Test
+    void should_add_treasure_to_adventurer_when_stepping_on_treasure() throws AdventurerException, CommandException {
+        //Given
+        List<Position> treasures = new ArrayList<>(List.of(new Position(0, 1)));
+        Map mapWithTreasures = new Map(10, 10, Collections.emptySet(), treasures);
+
+        //When
+        this.adventurer = new Adventurer("Bob", position, Orientation.NORTH, mapWithTreasures);
+        String result = adventurer.executeCommands("A");
+
+        //Then
+        Assertions.assertAll(
+                () -> Assertions.assertEquals("0 - 1 - N", result),
+                () -> Assertions.assertEquals(1, adventurer.getTreasures()),
+                () -> Assertions.assertEquals(0, mapWithTreasures.getTreasures().size())
+        );
+    }
+
+    @DisplayName("Should add two treasures to adventurer when stepping on two treasures")
+    @Test
+    void should_add_two_treasures_to_adventurer_when_stepping_on_two_treasures() throws AdventurerException, CommandException {
+        //Given
+        List<Position> treasures = new ArrayList<>(List.of(new Position(0, 1), new Position(0, 2)));
+        Map mapWithTreasures = new Map(10, 10, Collections.emptySet(), treasures);
+
+        //When
+        this.adventurer = new Adventurer("Bob", position, Orientation.NORTH, mapWithTreasures);
+        String result = adventurer.executeCommands("AA");
+
+        //Then
+        Assertions.assertAll(
+                () -> Assertions.assertEquals("0 - 2 - N", result),
+                () -> Assertions.assertEquals(2, adventurer.getTreasures()),
+                () -> Assertions.assertEquals(0, mapWithTreasures.getTreasures().size())
+        );
+
+    }
+
+    @DisplayName("Should add two treasure to adventurer when stepping on two treasures on the same position")
+    @Test
+    void should_add_two_treasures_to_adventure_when_stepping_on_two_treasures_on_the_same_position() throws CommandException, AdventurerException {
+        //Given
+        List<Position> treasures = new ArrayList<>(List.of(new Position(0, 1), new Position(0, 1)));
+        Map mapWithTreasures = new Map(10, 10, Collections.emptySet(), treasures);
+
+        //When
+        this.adventurer = new Adventurer("Bob", position, Orientation.NORTH, mapWithTreasures);
+        String result = adventurer.executeCommands("AADDA");
+
+        //Then
+        Assertions.assertAll(
+                () -> Assertions.assertEquals("0 - 1 - S", result),
+                () -> Assertions.assertEquals(2, adventurer.getTreasures()),
+                () -> Assertions.assertEquals(0, mapWithTreasures.getTreasures().size())
+        );
+    }
 }
