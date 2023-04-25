@@ -53,9 +53,9 @@
                 <version>0.8.7</version>
                 <configuration>
                     <excludes>
-                        <exclude>org/izrak/export/Exporter.java</exclude>
-                        <exclude>org/izrak/parsing/InputParser.java</exclude>
-                        <exclude>org/izrak/Main.java</exclude>
+                        <exclude>**/Exporter.java</exclude>
+                        <exclude>**/InputParser.java</exclude>
+                        <exclude>**/Main.java</exclude>
                     </excludes>
                 </configuration>
                 <executions>

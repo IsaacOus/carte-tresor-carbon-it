@@ -3,6 +3,6 @@ codecov:
 
 ignore:
   - "src/test/**"
-  - "src/main/java/Main.java"
-  - "src/main/export/**"
-  - "src/main/parsing/**"
+  - "**/Main.java"
+  - "**/Exporter.java"
+  - "**/InputParser.java"
