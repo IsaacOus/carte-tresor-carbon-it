@@ -91,7 +91,7 @@ class AdventurerTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"D, 0 - 0 - E", "DD, 0 - 0 - S", "DDD, 0 - 0 - W", "DDDD, 0 - 0 - N",})
+    @CsvSource({"D, 0 - 0 - W", "DD, 0 - 0 - S", "DDD, 0 - 0 - E", "DDDD, 0 - 0 - N",})
     void should_be_at_same_position_and_correct_orientation_when_turn_right(String command, String newPosition) throws CommandException {
         // When
         String result = adventurer.executeCommands(command);
@@ -101,7 +101,7 @@ class AdventurerTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"G, 0 - 0 - W", "GG, 0 - 0 - S", "GGG, 0 - 0 - E", "GGGG, 0 - 0 - N",})
+    @CsvSource({"G, 0 - 0 - E", "GG, 0 - 0 - S", "GGG, 0 - 0 - W", "GGGG, 0 - 0 - N",})
     void should_be_at_same_position_and_facing_correct_orientation_when_given_turn_left_command(String command, String newPosition) throws CommandException {
         //When
         String result = adventurer.executeCommands(command);
@@ -123,10 +123,10 @@ class AdventurerTest {
 
     @DisplayName("Should move forward when given a forward command")
     @ParameterizedTest
-    @CsvSource({"NORTH, 1 - 2 - N",
-            "SOUTH, 1 - 0 - S",
-            "EAST, 2 - 1 - E",
-            "WEST, 0 - 1 - W"})
+    @CsvSource({"NORTH, 1 - 0 - N",
+            "SOUTH, 1 - 2 - S",
+            "EAST, 0 - 1 - E",
+            "WEST, 2 - 1 - W"})
     void should_move_forward_when_given_a_forward_command(String adventurerOrientation, String newPosition) throws CommandException, AdventurerException {
         //Given
         Position adventurerPosition = new Position(1, 1);
@@ -143,50 +143,56 @@ class AdventurerTest {
     @Test
     void should_not_move_when_given_a_forward_command_and_the_adventurer_is_at_the_edge_of_the_map_facing_north() throws AdventurerException, CommandException {
         //Given
-        Position positionAtEdge = new Position(0, 9);
+        Position positionAtEdge = new Position(0, 0);
 
         //When
         Adventurer adventurer = new Adventurer("Bob", positionAtEdge, orientation, map);
         String result = adventurer.executeCommands("A");
 
         //Then
-        Assertions.assertEquals("0 - 9 - N", result);
+        Assertions.assertEquals("0 - 0 - N", result);
     }
 
     @DisplayName("Should not move when given a forward command and the adventurer is at the edge of the map and facing east")
     @Test
     void should_not_move_when_given_a_forward_command_and_the_adventurer_is_at_the_edge_of_the_map_facing_east() throws AdventurerException, CommandException {
         //Given
-        Position positionAtEdge = new Position(9, 0);
+        Position positionAtEdge = new Position(0, 0);
 
         //When
         Adventurer adventurer = new Adventurer("Bob", positionAtEdge, Orientation.EAST, map);
         String result = adventurer.executeCommands("A");
 
         //Then
-        Assertions.assertEquals("9 - 0 - E", result);
+        Assertions.assertEquals("0 - 0 - E", result);
     }
 
     @DisplayName("Should not move when given a forward command when the adventurer is at the edge of the map and facing south")
     @Test
     void should_not_move_when_given_a_forward_command_and_the_adventurer_is_at_the_edge_of_the_map_facing_south() throws AdventurerException, CommandException {
+        //Given
+        Position positionAtEdge = new Position(0, 9);
+
         //When
-        Adventurer adventurer = new Adventurer("Bob", position, Orientation.SOUTH, map);
+        Adventurer adventurer = new Adventurer("Bob", positionAtEdge, Orientation.SOUTH, map);
         String result = adventurer.executeCommands("A");
 
         //Then
-        Assertions.assertEquals("0 - 0 - S", result);
+        Assertions.assertEquals("0 - 9 - S", result);
     }
 
     @DisplayName("Should not move when given a forward command when the adventurer is at the edge of the map and facing west")
     @Test
     void should_not_move_when_give_a_forward_command_and_the_adventurer_is_at_the_edge_of_the_map_facing_west() throws AdventurerException, CommandException {
+        //Given
+        Position positionAtEdge = new Position(9, 0);
+
         //When
-        Adventurer adventurer = new Adventurer("Bob", position, Orientation.WEST, map);
+        Adventurer adventurer = new Adventurer("Bob", positionAtEdge, Orientation.WEST, map);
         String result = adventurer.executeCommands("A");
 
         //Then
-        Assertions.assertEquals("0 - 0 - W", result);
+        Assertions.assertEquals("9 - 0 - W", result);
     }
 
     @DisplayName("Should not move when given a forward command and the adventurer is facing a mountain")
@@ -213,12 +219,12 @@ class AdventurerTest {
         Map mapWithTreasures = new Map(10, 10, Collections.emptySet(), treasures);
 
         //When
-        this.adventurer = new Adventurer("Bob", position, Orientation.NORTH, mapWithTreasures);
+        this.adventurer = new Adventurer("Bob", position, Orientation.SOUTH, mapWithTreasures);
         String result = adventurer.executeCommands("A");
 
         //Then
         Assertions.assertAll(
-                () -> Assertions.assertEquals("0 - 1 - N", result),
+                () -> Assertions.assertEquals("0 - 1 - S", result),
                 () -> Assertions.assertEquals(1, adventurer.getTreasures()),
                 () -> Assertions.assertEquals(0, mapWithTreasures.getTreasures().size())
         );
@@ -232,12 +238,12 @@ class AdventurerTest {
         Map mapWithTreasures = new Map(10, 10, Collections.emptySet(), treasures);
 
         //When
-        this.adventurer = new Adventurer("Bob", position, Orientation.NORTH, mapWithTreasures);
+        this.adventurer = new Adventurer("Bob", position, Orientation.SOUTH, mapWithTreasures);
         String result = adventurer.executeCommands("AA");
 
         //Then
         Assertions.assertAll(
-                () -> Assertions.assertEquals("0 - 2 - N", result),
+                () -> Assertions.assertEquals("0 - 2 - S", result),
                 () -> Assertions.assertEquals(2, adventurer.getTreasures()),
                 () -> Assertions.assertEquals(0, mapWithTreasures.getTreasures().size())
         );
@@ -252,12 +258,12 @@ class AdventurerTest {
         Map mapWithTreasures = new Map(10, 10, Collections.emptySet(), treasures);
 
         //When
-        this.adventurer = new Adventurer("Bob", position, Orientation.NORTH, mapWithTreasures);
+        this.adventurer = new Adventurer("Bob", position, Orientation.SOUTH, mapWithTreasures);
         String result = adventurer.executeCommands("AADDA");
 
         //Then
         Assertions.assertAll(
-                () -> Assertions.assertEquals("0 - 1 - S", result),
+                () -> Assertions.assertEquals("0 - 1 - N", result),
                 () -> Assertions.assertEquals(2, adventurer.getTreasures()),
                 () -> Assertions.assertEquals(0, mapWithTreasures.getTreasures().size())
         );

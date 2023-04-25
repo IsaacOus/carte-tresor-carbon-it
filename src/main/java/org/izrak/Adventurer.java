@@ -69,10 +69,10 @@ public class Adventurer implements Command {
     }
 
     private boolean isAdventurerAtEdgeOfMap() {
-        return (this.position.getX() == 0 && orientation == Orientation.WEST) ||
-                (this.position.getX() == map.getWidth() - 1 && orientation == Orientation.EAST) ||
-                (this.position.getY() == 0 && orientation == Orientation.SOUTH) ||
-                (this.position.getY() == map.getHeight() - 1 && orientation == Orientation.NORTH);
+        return (this.position.getX() == 0 && orientation == Orientation.EAST) ||
+                (this.position.getX() == map.getWidth() - 1 && orientation == Orientation.WEST) ||
+                (this.position.getY() == 0 && orientation == Orientation.NORTH) ||
+                (this.position.getY() == map.getHeight() - 1 && orientation == Orientation.SOUTH);
     }
 
     @Override
