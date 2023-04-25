@@ -40,7 +40,8 @@ mvn clean test
 
 
 ### Auteur
-@IsaacOus
+[Isaac OUSLIMANE](https://github.com/IsaacOus)
+
 
 
 
