@@ -12,13 +12,26 @@ public class Exporter implements Export {
 
         try (FileWriter fileWriter = new FileWriter(fileName)) {
 
-            fileWriter.write("C - " + map.getWidth() + " - " + map.getHeight());
-            fileWriter.write("M - " + map.getMountains());
-            fileWriter.write("T - " + map.getTreasures());
+            fileWriter.write("C - " + map.getWidth() + " - " + map.getHeight() + "\n");
 
-            fileWriter.write("A - "  + adventurer +
+            map.getMountains().forEach(mountain -> {
+                try {
+                    fileWriter.write("M - " + mountain.getX() + " - " + mountain.getY() + "\n");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            map.getTreasures().forEach(treasure -> {
+                try {
+                    fileWriter.write("T - " + treasure.getX() + " - " + treasure.getY() + " - " + map.getTreasures().size() + "\n");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            fileWriter.write("A - " + adventurer+
                     " - " + commands);
-
         }
     }
 
