@@ -3,6 +3,7 @@ package org.izrak.parsing;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputParser {
@@ -15,9 +16,9 @@ public class InputParser {
 
     public InputParser(String filename) {
         map = new String[2];
-        adventurers = new ArrayList<String[]>();
-        treasures = new ArrayList<String[]>();
-        mountains = new ArrayList<String[]>();
+        adventurers = new ArrayList<>();
+        treasures = new ArrayList<>();
+        mountains = new ArrayList<>();
 
         try {
             File file = new File(filename);
@@ -52,15 +53,15 @@ public class InputParser {
         return map;
     }
 
-    public ArrayList<String[]> getAdventurers() {
+    public List<String[]> getAdventurers() {
         return adventurers;
     }
 
-    public ArrayList<String[]> getTreasures() {
+    public List<String[]> getTreasures() {
         return treasures;
     }
 
-    public ArrayList<String[]> getMountains() {
+    public List<String[]> getMountains() {
         return mountains;
     }
 }
