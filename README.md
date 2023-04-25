@@ -1,8 +1,7 @@
 ## Carte aux trésors 🏴‍☠️
 
 [![codecov](https://codecov.io/gh/IsaacOus/carte-tresor-carbon-it/branch/main/graph/badge.svg?token=FALO81VHPO)](https://codecov.io/gh/IsaacOus/carte-tresor-carbon-it)
-[![SonarCloud](https://github.com/IsaacOus/carte-tresor-carbon-it/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/IsaacOus/carte-tresor-carbon-it/actions/workflows/build.yml)
-[![Codecov](https://github.com/IsaacOus/carte-tresor-carbon-it/actions/workflows/codecov.yml/badge.svg?branch=main)](https://github.com/IsaacOus/carte-tresor-carbon-it/actions/workflows/codecov.yml)
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=isaacous_carte-tresor)](https://sonarcloud.io/summary/new_code?id=isaacous_carte-tresor)
 ---
 _Projet réalisé dans le cadre d'un test technique pour Carbon IT_
 
